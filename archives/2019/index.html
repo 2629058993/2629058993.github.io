@@ -40,14 +40,12 @@
 
 
 
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
-
 <script src="/js/iconfont.js?v=1.0.1" ></script>
 
 <meta name="generator" content="Hexo 4.2.0"></head>
 <div style="display: none">
   <input class="theme_disqus_on" value="false">
-  <input class="theme_preload_comment" value="false">
+  <input class="theme_preload_comment" value="true">
   <input class="theme_blog_path" value="">
 </div>
 
@@ -219,6 +217,25 @@
         </article>
         
         
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+
+<script src="/js/gitment.js"></script>
+
+<script>
+    var gitment = new Gitment({
+        id: 'http://yoursite.com/', // 可选。默认为 location.href
+        owner: '2629058993',
+        repo: '2629058993.github.io',
+        oauth: {
+            client_id: 'f7c41a8bfbc7c675b5e6',
+            client_secret: 'b7eece78a94bd69b5d88a35e3b6aac1bb46e0843',
+        },
+    })
+    gitment.render('comments')
+</script>
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">©2016-2019 Yelog</p>
