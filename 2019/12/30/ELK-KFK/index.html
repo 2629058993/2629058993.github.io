@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Elk+Kafka日志收集-简单版demo | 生活也需平稳对待</title>
+  <meta name="keywords" content=" ELK , KafKa消息队列 , 12月30日晚多云 ">
+  <meta name="description" content="Elk+Kafka日志收集-简单版demo | 生活也需平稳对待">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="生活也需平稳对待">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="生活也需平稳对待">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="蛋蛋有点笨">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>蛋蛋有点笨</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+        <a title="github" href="https://github.com/2629058993/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+        <a title="qq" href="http://wpa.qq.com/msgrd?v=3&uin=2629058993&site=qq&menu=yes" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-qq"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+        <a title="neteasemusic" href="https://music.163.com/#/user/home?id=1613839267" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-neteasemusic"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(2)</small></div></li>
+    
+        
+            
+            <li><div data-rel="搭建教程">搭建教程<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="2">
+<input type="hidden" id="yelog_site_word_count" value="5.4k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode==13){return false;}">
+        <input class="search" type="text" placeholder="Search..." autocomplete="off"id="local-search-input" >
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color1">github托管代码</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">Hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">3-Hexo主题</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">Github Pages</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">ELK</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">KafKa消息队列</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">12月30日晚多云</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="搭建教程 "
+           href="/2019/12/29/my-first-blog/"
+           data-tag="github托管代码,Hexo,3-Hexo主题,Github Pages"
+           data-author="" >
+            <span class="post-title" title="搭建个人博客教程-hexo">搭建个人博客教程-hexo</span>
+            <span class="post-date" title="2019-12-29 20:15:46">2019/12/29</span>
+        </a>
+        
+        <a  class="搭建教程 "
+           href="/2019/12/30/ELK-KFK/"
+           data-tag="ELK,KafKa消息队列,12月30日晚多云"
+           data-author="" >
+            <span class="post-title" title="Elk+Kafka日志收集-简单版demo">Elk+Kafka日志收集-简单版demo</span>
+            <span class="post-date" title="2019-12-30 21:15:46">2019/12/30</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-ELK-KFK" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Elk+Kafka日志收集-简单版demo</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="搭建教程">搭建教程</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">ELK</a>
+            
+            <a class="color5">KafKa消息队列</a>
+            
+            <a class="color5">12月30日晚多云</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-12-30 23:45:38'>2019-12-30 21:15</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:2k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1、ElasticSearch-简称ES"><span class="toc-text">1.1、ElasticSearch(简称ES)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2、Logstash"><span class="toc-text">1.2、Logstash</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3、Kibana"><span class="toc-text">1.3、Kibana</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#这里ELk就介绍到这里，然后是Elk加kafka收集日志的大致流程图"><span class="toc-text">这里ELk就介绍到这里，然后是Elk加kafka收集日志的大致流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程说完了，后面就是实例代码了（这里就不用aop了，只是简单将数据放入kafka，其实道理一样的）"><span class="toc-text">流程说完了，后面就是实例代码了（这里就不用aop了，只是简单将数据放入kafka，其实道理一样的）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-两个springBoot一个生产者，一个消费者。先说生产者（废话不说上图！）"><span class="toc-text">2.两个springBoot一个生产者，一个消费者。先说生产者（废话不说上图！）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-消费者"><span class="toc-text">3.消费者:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-到这里代码就可以了，随后呢就可以启动生产者来将数据放入kafka。"><span class="toc-text">4.到这里代码就可以了，随后呢就可以启动生产者来将数据放入kafka。</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>背景:<br>随着业务复杂度的提升以及微服务的兴起，传统单一项目会被按照业务规则进行垂直拆分，另外为了防止单点故障我们也会将重要的服务模块进行集群部署，通过负载均衡进行服务的调用。那么随着节点的增多，各个服务的日志也会散落在各个服务器上。这对于我们进行日志分析带来了巨大的挑战，总不能一台一台的登录去下载日志吧。那么我们需要一种收集日志的工具将散落在各个服务器节点上的日志收集起来，进行统一的查询及管理统计。那么ELK就可以做到这一点。</p>
+<p>ELK是ElasticSearch+Logstash+Kibana的简称，在这里我分别对如上几个组件做个简单的介绍：</p>
+<h2 id="1-1、ElasticSearch-简称ES"><a href="#1-1、ElasticSearch-简称ES" class="headerlink" title="1.1、ElasticSearch(简称ES)"></a>1.1、ElasticSearch(简称ES)</h2><p>Elasticsearch是一个高度可扩展的开源全文搜索和分析引擎。它允许您快速、实时地存储、搜索和分析大量数据。它通常用作底层引擎/技术，为具有复杂搜索特性和需求的应用程序提供动力。我们可以借助如ElasticSearch完成诸如搜索，日志收集，反向搜索，智能分析等功能。ES设计的目标：</p>
+<pre><code>(1).快速实时搜索
+Elasticsearch是一个实时搜索平台。这意味着，从索引文档到可搜索文档，存在轻微的延迟(通常为一秒)。
+
+(2).集群
+集群是一个或多个节点(服务器)的集合，这些节点(服务器)一起保存整个数据，并提供跨所有节点的联合索引
+和搜索功能。集群由一个惟一的名称来标识，默认情况下该名称为“elasticsearch”。这个名称很重要，因为
+节点只能是集群的一部分，如果节点被设置为通过其名称加入集群的话。确保不要在不同的环境中重用相同的
+集群名称，否则可能会导致节点加入错误的集群。例如，您可以使用logging-dev、logging-test和logging-prod
+开发、测试和生产集群。
+
+(3).节点
+节点是单个服务器，它是集群的一部分，它用来存储数据，并参与集群的索引和搜索功能。与集群一样，节点的
+名称默认为在启动时分配给节点的随机惟一标识符(UUID)。如果不需要默认值，可以定义任何节点名称。这个名
+称对于管理非常重要，因为您想要确定网络中的哪些服务器对应于Elasticsearch集群中的哪些节点。
+
+(4).索引
+索引是具有类似特征的文档的集合。例如，您可以有一个客户数据索引、另一个产品目录索引和另一个订单数
+据索引。索引由一个名称标识(必须是小写的)，该名称用于在对其中的文档执行索引、搜索、更新和删除操作
+时引用索引。在单个集群中，可以定义任意数量的索引。
+
+(5).文档
+文档是可以建立索引的基本信息单元。例如，可以为单个客户提供一个文档，为单个
+产品提供一个文档，为单个订单提供另一个文档。这个文档用JSON (JavaScript对象
+符号)表示。在索引中，可以存储任意数量的文档。请注意，尽管文档在物理上驻留在
+索引中，但实际上文档必须被索引/分配到索引中的类型中。</code></pre><h2 id="1-2、Logstash"><a href="#1-2、Logstash" class="headerlink" title="1.2、Logstash"></a>1.2、Logstash</h2><p>1.Logstash是一个开源数据收集引擎，具有实时流水线功能。Logstash可以动态地将来自不同数据源的数据统一起来，并将数据规范化后(通过Filter过滤)传输到您选择的目标。<br><img src="/img/4a05c41bbcb027c2a43f625c6f0f04a313b46d6d.png"></img><br>2.在这里inputs代表数据的输入通道，大家可以简单理解为来源。常见的可以从kafka,FileBeat, DB等获取日志数据，这些数据经过fliter过滤后（比如说：日志过滤，json格式解析等）通过outputs传输到指定的位置进行存储(Elasticsearch，Mogodb，Redis等)</p>
+<p>简单的实例：</p>
+<pre><code>cd logstash-6.4.1
+bin/logstash -e &apos;input { stdin { } } output { stdout {} }&apos;</code></pre><h2 id="1-3、Kibana"><a href="#1-3、Kibana" class="headerlink" title="1.3、Kibana"></a>1.3、Kibana</h2><p>1.kibana是用于Elasticsearch检索数据的开源分析和可视化平台。我们可以使用Kibana搜索、查看或者与存储在Elasticsearch索引中的数据交互。同时也可以轻松地执行高级数据分析并在各种图表、表和映射中可视化数据。基于浏览器的Kibana界面使您能够快速创建和共享动态仪表板，实时显示对Elasticsearch查询的更改。</p>
+<h2 id="这里ELk就介绍到这里，然后是Elk加kafka收集日志的大致流程图"><a href="#这里ELk就介绍到这里，然后是Elk加kafka收集日志的大致流程图" class="headerlink" title="这里ELk就介绍到这里，然后是Elk加kafka收集日志的大致流程图"></a>这里ELk就介绍到这里，然后是Elk加kafka收集日志的大致流程图</h2><p><img src="/img/2a7721fc3dbe3fdf08ebb202f9f9faf058e396f6.jpeg"></img><br>（1）.概括一下就是生产者 生产日志到kafka之后，然后通过Logstash同步kafka的数据，经过output后到Elasticsearch,最后由kibana UI页面展示</p>
+<h2 id="流程说完了，后面就是实例代码了（这里就不用aop了，只是简单将数据放入kafka，其实道理一样的）"><a href="#流程说完了，后面就是实例代码了（这里就不用aop了，只是简单将数据放入kafka，其实道理一样的）" class="headerlink" title="流程说完了，后面就是实例代码了（这里就不用aop了，只是简单将数据放入kafka，其实道理一样的）"></a>流程说完了，后面就是实例代码了（这里就不用aop了，只是简单将数据放入kafka，其实道理一样的）</h2><p>1.首先创建两个springboot框架。并且都引入jar包。<br><img src="/img/222.PNG"></img></p>
+<h2 id="2-两个springBoot一个生产者，一个消费者。先说生产者（废话不说上图！）"><a href="#2-两个springBoot一个生产者，一个消费者。先说生产者（废话不说上图！）" class="headerlink" title="2.两个springBoot一个生产者，一个消费者。先说生产者（废话不说上图！）"></a>2.两个springBoot一个生产者，一个消费者。先说生产者（废话不说上图！）</h2><p>（1）. application.properties：<br><img src="/img/333.PNG"></img></p>
+<pre><code>#============== kafka ===================
+# 指定kafka server的地址，集群配多个，中间，逗号隔开
+spring.kafka.bootstrap-servers=192.168.222.133:9092,192.168.222.133:9093,192.168.222.133:9094
+#=============== provider  =======================
+spring.kafka.producer.retries=0
+# 每次批量发送消息的数量
+spring.kafka.producer.batch-size=16384
+spring.kafka.producer.buffer-memory=33554432
+
+# 指定消息key和消息体的编解码方式
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer</code></pre><p>(3).然后是controller层。<br><img src="/img/3333.PNG"></img></p>
+<pre><code>package com.fh.controller;
+
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+@RequestMapping(&quot;producer&quot;)
+public class ProducerController {
+    @Resource
+    private KafkaTemplate kafkaTemplate;
+
+    @PostMapping
+    public void init() {
+    for (int i = 0; i &lt; 10; i++) {
+        kafkaTemplate.send(&quot;elk-init&quot;, &quot;这是生产测试&quot; + i);
+        System.out.println(i);
+    }
+    }
+}</code></pre><h2 id="3-消费者"><a href="#3-消费者" class="headerlink" title="3.消费者:"></a>3.消费者:</h2><p>（1）application.properties：<br><img src="/img/444.PNG"></img></p>
+<pre><code>server.port=8081
+#=============== consumer  =======================
+# 指定默认消费者group id
+spring.kafka.consumer.group-id=user-log-group
+# 指定kafka server的地址，集群配多个，中间，逗号隔开
+spring.kafka.bootstrap-servers=192.168.222.133:9092,192.168.222.133:9093,192.168.222.133:9094
+spring.kafka.consumer.auto-offset-reset=earliest
+spring.kafka.consumer.enable-auto-commit=true
+spring.kafka.consumer.auto-commit-interval=100
+# 指定消息key和消息体的编解码方式
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer</code></pre><p>(2).监听topic，可以用来测试生产者是否可以将数据存到kafka<br><img src="/img/555.PNG"></img></p>
+<pre><code>package com.fh.Consumer;
+
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
+import java.util.Optional;
+
+@Component
+public class Consumer {
+    //ConsumerRecord kafka提供的
+    @KafkaListener(topics = &quot;elk-init&quot;)  //监听topic
+    public void consumer(ConsumerRecord consumerRecord) {
+    //ofNullable 如果为非空，返回 Optional 描述的指定值，否则返回空的 Optional
+    Optional&lt;Object&gt; kafkaMassage = Optional.ofNullable(consumerRecord.value());
+    //如果值存在则方法会返回true，否则返回 false。
+    if (kafkaMassage.isPresent()) {
+        Object o = kafkaMassage.get();
+        System.out.println(o);
+    }
+    }
+}</code></pre><h2 id="4-到这里代码就可以了，随后呢就可以启动生产者来将数据放入kafka。"><a href="#4-到这里代码就可以了，随后呢就可以启动生产者来将数据放入kafka。" class="headerlink" title="4.到这里代码就可以了，随后呢就可以启动生产者来将数据放入kafka。"></a>4.到这里代码就可以了，随后呢就可以启动生产者来将数据放入kafka。</h2><p>放入kafka之后就好说了，通过Logstash来拉取kafka数据，下面是Logstash需要的<br>配置文件代码。粘贴只需要修改bootstrap_servers和hosts即可。</p>
+<pre><code>input{
+  kafka{
+    bootstrap_servers =&gt; &quot;192.168.222.133:9092,192.168.222.133:9093,192.168.222.133:9094&quot;
+    topics_pattern  =&gt; &quot;elk-.*&quot;
+    consumer_threads =&gt; 5
+    decorate_events =&gt; true
+    codec =&gt; &quot;json&quot;
+    auto_offset_reset =&gt; &quot;latest&quot;
+    group_id =&gt; &quot;logstash1&quot;##logstash 集群需相同
+
+}
+}
+filter {
+
+
+    grok {
+        match =&gt; {&quot;message&quot;=&gt;&quot;%{COMBINEDAPACHELOG}&quot;}
+ }
+
+}
+output {
+   elasticsearch {
+     hosts =&gt; [&quot;192.168.222.133:9200&quot;,&quot;192.168.222.133:9201&quot;,&quot;192.168.222.133:9202&quot;]
+     index =&gt;  &quot;%{[@metadata][kafka][topic]}-%{+YYYY-MM-dd}&quot; 
+}    
+    stdout {
+    codec =&gt; rubydebug
+}    
+}</code></pre><p>(2).后面的就不概述了，Logstash将数据给Es之后，使用kibana展示即可。<br>   后续想了解的可以百度。</p>
+<p>结语:</p>
+<pre><code> 即使我们相隔着万水千山
+
+也会跟着光的方向为你远眺凭栏</code></pre>
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2629058993@qq.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Elk+Kafka日志收集-简单版demo</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">2k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="蛋蛋有点笨">蛋蛋有点笨</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-12-30, 21:15:46</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-30, 23:45:38</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/30/ELK-KFK/" title="Elk+Kafka日志收集-简单版demo">http://yoursite.com/2019/12/30/ELK-KFK/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+
+<script src="/js/gitment.js"></script>
+
+<script>
+    var gitment = new Gitment({
+        id: 'http://yoursite.com/2019/12/30/ELK-KFK/', // 可选。默认为 location.href
+        owner: '2629058993',
+        repo: '2629058993.github.io',
+        oauth: {
+            client_id: 'f7c41a8bfbc7c675b5e6',
+            client_secret: 'b7eece78a94bd69b5d88a35e3b6aac1bb46e0843',
+        },
+    })
+    gitment.render('comments')
+</script>
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2016-2019 BaiHua</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min mobile"></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#github托管代码','#Hexo','#3-Hexo主题','#Github Pages','#ELK','#KafKa消息队列','#12月30日晚多云',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+<div style="position:absolute; bottom: 0; right: 0;">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=508917206&auto=1&height=66"></iframe>
+</div>
+</html>
