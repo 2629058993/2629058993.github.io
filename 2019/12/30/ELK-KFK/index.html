@@ -6,28 +6,23 @@
   <meta name="keywords" content=" ELK , KafKa消息队列 , 12月30日晚多云 ">
   <meta name="description" content="Elk+Kafka日志收集-简单版demo | 生活也需平稳对待">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="背景:随着业务复杂度的提升以及微服务的兴起，传统单一项目会被按照业务规则进行垂直拆分，另外为了防止单点故障我们也会将重要的服务模块进行集群部署，通过负载均衡进行服务的调用。那么随着节点的增多，各个服务的日志也会散落在各个服务器上。这对于我们进行日志分析带来了巨大的挑战，总不能一台一台的登录去下载日志吧。那么我们需要一种收集日志的工具将散落在各个服务器节点上的日志收集起来，进行统一的查询及管理统计。">
+<meta name="description" content="背景:1.线程每次new Thread()新建线程对象性能差。并且线程缺乏统一管理，可能无限制新建线程，相互之间 竞争,极可能占用过多系统资源导致系统死机。  2.缺乏很多功能，比如定时，周期性执行，或者线程中断。  3.所以再出现了种种问题之后就出现了线程池。线程池的好处:1.降低资源消耗，通过重复利用已创建的线程来降低重复创建线程、销毁线程造成的消耗  2.提高响应速度，当任务到达时，线程帮此">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Elk+Kafka日志收集-简单版demo">
-<meta property="og:url" content="http://yoursite.com/2019/12/30/ELK-KFK/index.html">
+<meta property="og:title" content="四大线程池">
+<meta property="og:url" content="http://yoursite.com/2019/12/31/threadpool/index.html">
 <meta property="og:site_name" content="生活也需平稳对待">
-<meta property="og:description" content="背景:随着业务复杂度的提升以及微服务的兴起，传统单一项目会被按照业务规则进行垂直拆分，另外为了防止单点故障我们也会将重要的服务模块进行集群部署，通过负载均衡进行服务的调用。那么随着节点的增多，各个服务的日志也会散落在各个服务器上。这对于我们进行日志分析带来了巨大的挑战，总不能一台一台的登录去下载日志吧。那么我们需要一种收集日志的工具将散落在各个服务器节点上的日志收集起来，进行统一的查询及管理统计。">
+<meta property="og:description" content="背景:1.线程每次new Thread()新建线程对象性能差。并且线程缺乏统一管理，可能无限制新建线程，相互之间 竞争,极可能占用过多系统资源导致系统死机。  2.缺乏很多功能，比如定时，周期性执行，或者线程中断。  3.所以再出现了种种问题之后就出现了线程池。线程池的好处:1.降低资源消耗，通过重复利用已创建的线程来降低重复创建线程、销毁线程造成的消耗  2.提高响应速度，当任务到达时，线程帮此">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/img/4a05c41bbcb027c2a43f625c6f0f04a313b46d6d.png">
-<meta property="og:image" content="http://yoursite.com/img/2a7721fc3dbe3fdf08ebb202f9f9faf058e396f6.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/222.PNG">
-<meta property="og:image" content="http://yoursite.com/img/333.PNG">
-<meta property="og:image" content="http://yoursite.com/img/3333.PNG">
-<meta property="og:image" content="http://yoursite.com/img/444.PNG">
-<meta property="og:image" content="http://yoursite.com/img/555.PNG">
-<meta property="article:published_time" content="2019-12-30T13:15:46.000Z">
-<meta property="article:modified_time" content="2019-12-30T15:45:38.079Z">
+<meta property="og:image" content="http://yoursite.com/img/0DB40A6FB2484214978C8D8C9A78E359.jpg">
+<meta property="og:image" content="http://yoursite.com/img/43757A2C9ADC44FA8E8E31EDCFB72477.jpg">
+<meta property="article:published_time" content="2019-12-31T08:08:46.000Z">
+<meta property="article:modified_time" content="2019-12-31T08:51:25.959Z">
 <meta property="article:author" content="蛋蛋有点笨">
-<meta property="article:tag" content="ELK">
-<meta property="article:tag" content="KafKa消息队列">
-<meta property="article:tag" content="12月30日晚多云">
+<meta property="article:tag" content="thread pool">
+<meta property="article:tag" content="线程池">
+<meta property="article:tag" content="12月31日下午多云转晴">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/img/4a05c41bbcb027c2a43f625c6f0f04a313b46d6d.png">
+<meta name="twitter:image" content="http://yoursite.com/img/0DB40A6FB2484214978C8D8C9A78E359.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -199,22 +194,6 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a class="color1">github托管代码</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">Hexo</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">3-Hexo主题</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">Github Pages</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color4">ELK</a>
     </li>
     
@@ -238,19 +217,27 @@
         <a class="color3">12月31日下午多云转晴</a>
     </li>
     
+    <li class="article-tag-list-item">
+        <a class="color1">github托管代码</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">Hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">3-Hexo主题</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">Github Pages</a>
+    </li>
+    
     <div class="clearfix"></div>
 </div>
 
     
     <nav id="title-list-nav">
-        
-        <a  class="搭建教程 "
-           href="/2019/12/29/my-first-blog/"
-           data-tag="github托管代码,Hexo,3-Hexo主题,Github Pages"
-           data-author="" >
-            <span class="post-title" title="搭建个人博客教程-hexo">搭建个人博客教程-hexo</span>
-            <span class="post-date" title="2019-12-29 20:15:46">2019/12/29</span>
-        </a>
         
         <a  class="搭建教程 "
            href="/2019/12/30/ELK-KFK/"
@@ -266,6 +253,14 @@
            data-author="" >
             <span class="post-title" title="四大线程池">四大线程池</span>
             <span class="post-date" title="2019-12-31 16:08:46">2019/12/31</span>
+        </a>
+        
+        <a  class="搭建教程 "
+           href="/2019/12/29/my-first-blog/"
+           data-tag="github托管代码,Hexo,3-Hexo主题,Github Pages"
+           data-author="" >
+            <span class="post-title" title="搭建个人博客教程-hexo">搭建个人博客教程-hexo</span>
+            <span class="post-date" title="2019-12-29 20:15:46">2019/12/29</span>
         </a>
         
     </nav>
@@ -308,7 +303,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-30 23:45:38'>2019-12-30 21:15</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-30 23:48:31'>2019-12-30 21:15</time>
         
     </div>
     <div class="article-meta">
@@ -495,7 +490,7 @@ output {
     <p><span class="copy-title">文章字数:</span><span class="post-count">2k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="蛋蛋有点笨">蛋蛋有点笨</a></p>
     <p><span class="copy-title">发布时间:</span>2019-12-30, 21:15:46</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-30, 23:45:38</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-30, 23:48:31</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/30/ELK-KFK/" title="Elk+Kafka日志收集-简单版demo">http://yoursite.com/2019/12/30/ELK-KFK/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -559,7 +554,7 @@ output {
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#github托管代码','#Hexo','#3-Hexo主题','#Github Pages','#ELK','#KafKa消息队列','#12月30日晚多云','#thread pool','#线程池','#12月31日下午多云转晴',],
+            'data': ['#ELK','#KafKa消息队列','#12月30日晚多云','#thread pool','#线程池','#12月31日下午多云转晴','#github托管代码','#Hexo','#3-Hexo主题','#Github Pages',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
