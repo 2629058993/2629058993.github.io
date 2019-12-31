@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://yoursite.com/img/0DB40A6FB2484214978C8D8C9A78E359.jpg">
 <meta property="og:image" content="http://yoursite.com/img/43757A2C9ADC44FA8E8E31EDCFB72477.jpg">
 <meta property="article:published_time" content="2019-12-31T08:08:46.000Z">
-<meta property="article:modified_time" content="2019-12-31T08:51:25.959Z">
+<meta property="article:modified_time" content="2019-12-31T08:59:24.168Z">
 <meta property="article:author" content="蛋蛋有点笨">
 <meta property="article:tag" content="thread pool">
 <meta property="article:tag" content="线程池">
@@ -303,7 +303,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-31 16:51:25'>2019-12-31 16:08</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-31 16:59:24'>2019-12-31 16:08</time>
         
     </div>
     <div class="article-meta">
@@ -327,7 +327,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-text">背景:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程池的好处"><span class="toc-text">线程池的好处:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四大线程："><span class="toc-text">四大线程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newFixedThreadPool"><span class="toc-text">newFixedThreadPool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newCachedThreadPool"><span class="toc-text">newCachedThreadPool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newSingleThreadExecutor"><span class="toc-text">newSingleThreadExecutor:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newScheduledThreadPool"><span class="toc-text">newScheduledThreadPool:</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-text">背景:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程池的好处"><span class="toc-text">线程池的好处:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四大线程池："><span class="toc-text">四大线程池：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newFixedThreadPool"><span class="toc-text">newFixedThreadPool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newCachedThreadPool"><span class="toc-text">newCachedThreadPool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newSingleThreadExecutor"><span class="toc-text">newSingleThreadExecutor:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newScheduledThreadPool"><span class="toc-text">newScheduledThreadPool:</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -353,7 +353,7 @@
 2.提高响应速度，当任务到达时，线程帮此任务省去了创建线程的时间。
 
 3.提高线程的可管理性，线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低
-系统的稳定性，使用线程池可以进行统一的分配、调优、分配。</code></pre><h2 id="四大线程："><a href="#四大线程：" class="headerlink" title="四大线程："></a>四大线程：</h2><h2 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool:"></a><b>newFixedThreadPool:</b></h2><p>第一种比较常用newFixedThreadPool（固定大小的线程池,常用的哦）<br>首先看一下这种线程池的创建方法（底层代码）：</p>
+系统的稳定性，使用线程池可以进行统一的分配、调优、分配。</code></pre><h2 id="四大线程池："><a href="#四大线程池：" class="headerlink" title="四大线程池："></a>四大线程池：</h2><h2 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool:"></a><b>newFixedThreadPool:</b></h2><p>第一种比较常用newFixedThreadPool（固定大小的线程池,常用的哦）<br>首先看一下这种线程池的创建方法（底层代码）：</p>
 <pre><code>public static ExecutorService newFixedThreadPool(int nThreads) {
     return new ThreadPoolExecutor(nThreads, nThreads,
           0L, TimeUnit.MILLISECONDS,
@@ -489,7 +489,7 @@
     <p><span class="copy-title">文章字数:</span><span class="post-count">1.6k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="蛋蛋有点笨">蛋蛋有点笨</a></p>
     <p><span class="copy-title">发布时间:</span>2019-12-31, 16:08:46</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-31, 16:51:25</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-31, 16:59:24</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/31/threadpool/" title="四大线程池">http://yoursite.com/2019/12/31/threadpool/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
