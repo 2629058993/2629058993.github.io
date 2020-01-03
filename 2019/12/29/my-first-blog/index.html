@@ -6,23 +6,23 @@
   <meta name="keywords" content=" github托管代码 , Hexo , 3-Hexo主题 , Github Pages ">
   <meta name="description" content="搭建个人博客教程-hexo | 生活也需平稳对待">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="你知道的越多,你不知道的越多。简介:①.当今MySQL使用相当广泛，随着用户的增多以及数据量的增大，高并发随之而来。然而我们有很多办法可以缓解数据库的压力。分布式数据库、负载均衡、读写分离、增加缓存服务器等等。这里我们将采用读写分离技术进展缓解数据库的压力。②.其中实现读写分离的技术有很多方法，这里我们将采用mysql-proxy这个中间软件来实现。这个软件中含有一个读写分离的lua文件，这也是我">
+<meta name="description" content="参考文档:https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhangcongyi420&#x2F;article&#x2F;details&#x2F;92738646https:&#x2F;&#x2F;blog.csdn.net&#x2F;supermapsupport&#x2F;article&#x2F;details&#x2F;78953080 一.搭建之前，介绍以下mongodb集群的几种搭建方式：（1）.首先集群方式有三种：Replica Set（副本集）、Sharding（分片集">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql-proxy读写分离">
-<meta property="og:url" content="http://yoursite.com/2020/01/02/mysql-proxy/index.html">
+<meta property="og:title" content="Mongodb集群搭建">
+<meta property="og:url" content="http://yoursite.com/2020/01/03/mongo/index.html">
 <meta property="og:site_name" content="生活也需平稳对待">
-<meta property="og:description" content="你知道的越多,你不知道的越多。简介:①.当今MySQL使用相当广泛，随着用户的增多以及数据量的增大，高并发随之而来。然而我们有很多办法可以缓解数据库的压力。分布式数据库、负载均衡、读写分离、增加缓存服务器等等。这里我们将采用读写分离技术进展缓解数据库的压力。②.其中实现读写分离的技术有很多方法，这里我们将采用mysql-proxy这个中间软件来实现。这个软件中含有一个读写分离的lua文件，这也是我">
+<meta property="og:description" content="参考文档:https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhangcongyi420&#x2F;article&#x2F;details&#x2F;92738646https:&#x2F;&#x2F;blog.csdn.net&#x2F;supermapsupport&#x2F;article&#x2F;details&#x2F;78953080 一.搭建之前，介绍以下mongodb集群的几种搭建方式：（1）.首先集群方式有三种：Replica Set（副本集）、Sharding（分片集">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/img/clipboard.png">
-<meta property="og:image" content="http://yoursite.com/img/1d208803d83f448fa7291ad4d22f7ac0.jpg">
-<meta property="article:published_time" content="2020-01-02T07:23:35.000Z">
-<meta property="article:modified_time" content="2020-01-03T11:13:23.102Z">
+<meta property="og:image" content="http://yoursite.com/img/clipboardd.png">
+<meta property="article:published_time" content="2020-01-03T11:24:12.000Z">
+<meta property="article:modified_time" content="2020-01-03T11:41:17.892Z">
 <meta property="article:author" content="蛋蛋有点笨">
-<meta property="article:tag" content="mysql-proxy">
-<meta property="article:tag" content="数据库读写分离">
-<meta property="article:tag" content="mysql中间件">
+<meta property="article:tag" content="mongodb">
+<meta property="article:tag" content="非关系型数据库">
+<meta property="article:tag" content="mongodb集群">
+<meta property="article:tag" content="一月三日晚多云">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/img/clipboard.png">
+<meta name="twitter:image" content="http://yoursite.com/img/clipboardd.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -226,6 +226,18 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a class="color3">非关系型数据库</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">mongodb集群</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">一月三日晚多云</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a class="color1">github托管代码</a>
     </li>
     
@@ -275,18 +287,6 @@
     
     <li class="article-tag-list-item">
         <a class="color3">12月31日下午多云转晴</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">非关系型数据库</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">mongodb集群</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">一月三日晚多云</a>
     </li>
     
     <div class="clearfix"></div>
@@ -621,7 +621,7 @@ hexo new page &quot;my-second-blog&quot;</code></pre><p>生成如下：<br><img 
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ELK','#KafKa消息队列','#12月30日晚多云','#mongodb','#github托管代码','#Hexo','#3-Hexo主题','#Github Pages','#Mysql','#Mysql主从复制','#12月1日多云','#mysql-proxy','#数据库读写分离','#mysql中间件','#thread pool','#线程池','#12月31日下午多云转晴','#非关系型数据库','#mongodb集群','#一月三日晚多云',],
+            'data': ['#ELK','#KafKa消息队列','#12月30日晚多云','#mongodb','#非关系型数据库','#mongodb集群','#一月三日晚多云','#github托管代码','#Hexo','#3-Hexo主题','#Github Pages','#Mysql','#Mysql主从复制','#12月1日多云','#mysql-proxy','#数据库读写分离','#mysql中间件','#thread pool','#线程池','#12月31日下午多云转晴',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
