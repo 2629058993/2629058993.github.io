@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>四大线程池 | 生活也需平稳对待</title>
-  <meta name="keywords" content=" thread pool , 线程池 , 12月31日下午多云转晴 ">
-  <meta name="description" content="四大线程池 | 生活也需平稳对待">
+  <title>Mongodb集群搭建 | 生活也需平稳对待</title>
+  <meta name="keywords" content=" mongodb , 非关系型数据库 , mongodb集群 , 一月三日晚多云 ">
+  <meta name="description" content="Mongodb集群搭建 | 生活也需平稳对待">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="你知道的越多,你不知道的越多。简介:①.当今MySQL使用相当广泛，随着用户的增多以及数据量的增大，高并发随之而来。然而我们有很多办法可以缓解数据库的压力。分布式数据库、负载均衡、读写分离、增加缓存服务器等等。这里我们将采用读写分离技术进展缓解数据库的压力。②.其中实现读写分离的技术有很多方法，这里我们将采用mysql-proxy这个中间软件来实现。这个软件中含有一个读写分离的lua文件，这也是我">
 <meta property="og:type" content="article">
@@ -355,9 +355,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-threadpool" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-mongo" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">四大线程池</h1>
+        <h1 class="article-title">Mongodb集群搭建</h1>
     
     <div class="article-meta">
         
@@ -365,30 +365,32 @@
         
         <span class="book">
             
-                <a  data-rel="java知识">java知识</a>
+                <a  data-rel="搭建教程">搭建教程</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color2">thread pool</a>
+            <a class="color3">mongodb</a>
             
-            <a class="color4">线程池</a>
+            <a class="color3">非关系型数据库</a>
             
-            <a class="color3">12月31日下午多云转晴</a>
+            <a class="color5">mongodb集群</a>
+            
+            <a class="color3">一月三日晚多云</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-31 16:59:24'>2019-12-31 16:08</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-03 19:41:17'>2020-01-03 19:24</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.6k</span>
+        <span>字数:1.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -407,7 +409,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-text">背景:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程池的好处"><span class="toc-text">线程池的好处:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四大线程池："><span class="toc-text">四大线程池：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newFixedThreadPool"><span class="toc-text">newFixedThreadPool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newCachedThreadPool"><span class="toc-text">newCachedThreadPool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newSingleThreadExecutor"><span class="toc-text">newSingleThreadExecutor:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newScheduledThreadPool"><span class="toc-text">newScheduledThreadPool:</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文档"><span class="toc-text">参考文档:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-搭建之前，介绍以下mongodb集群的几种搭建方式："><span class="toc-text">一.搭建之前，介绍以下mongodb集群的几种搭建方式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-这里我们为了保证mongodb的高可用性，就给大家主要写Replica-Set（副本集）。"><span class="toc-text">二.这里我们为了保证mongodb的高可用性，就给大家主要写Replica Set（副本集）。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-开始搭建集群。"><span class="toc-text">三.开始搭建集群。</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -423,139 +425,82 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景:"></a>背景:</h2><pre><code>1.线程每次new Thread()新建线程对象性能差。并且线程缺乏统一管理，可能无限制新建线程，相互之间
-竞争,极可能占用过多系统资源导致系统死机。
+        <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档:"></a>参考文档:</h2><p><a href="https://blog.csdn.net/zhangcongyi420/article/details/92738646" target="_blank" rel="noopener">https://blog.csdn.net/zhangcongyi420/article/details/92738646</a><br><a href="https://blog.csdn.net/supermapsupport/article/details/78953080" target="_blank" rel="noopener">https://blog.csdn.net/supermapsupport/article/details/78953080</a></p>
+<h2 id="一-搭建之前，介绍以下mongodb集群的几种搭建方式："><a href="#一-搭建之前，介绍以下mongodb集群的几种搭建方式：" class="headerlink" title="一.搭建之前，介绍以下mongodb集群的几种搭建方式："></a>一.搭建之前，介绍以下mongodb集群的几种搭建方式：</h2><pre><code>（1）.首先集群方式有三种：Replica Set（副本集）、Sharding（分片集）、Master-Slave（主从）三种方式。
 
-2.缺乏很多功能，比如定时，周期性执行，或者线程中断。
+（2）.三种模式各有优劣，适用于不同的场合，属Replica set（副本集）应用最为广泛，主从模式现在用的较
+ 少，sharding模式最为完备，但配置维护较为复杂。
 
-3.所以再出现了种种问题之后就出现了线程池。</code></pre><h2 id="线程池的好处"><a href="#线程池的好处" class="headerlink" title="线程池的好处:"></a>线程池的好处:</h2><pre><code>1.降低资源消耗，通过重复利用已创建的线程来降低重复创建线程、销毁线程造成的消耗
+（3）.Master/Slave（主从）
+先说最后一个，是Master/Slave，不是Slaver。这种方式基本上不再推荐使用，只能从Master复制数据到Slave
+，并不提供高可用，一旦Master结点出故障就比较难处理。具体细节就不说了，反正已经不推荐使用。
 
-2.提高响应速度，当任务到达时，线程帮此任务省去了创建线程的时间。
+（4）.Replica Set（副本集）
+1.即常说的副本集。副本集的主要目标有几个：
+2.高可用（主要目标）：当一个结点故障时自动切换到其他结点；
+3.数据冗余（主要目标）：数据复制到n个结点上，增加数据安全性，同时为高可用提供基础；
+4.功能隔离（次要目标）：使用不同的结点隔离某些有特殊需求的功能，比如使用一个结点进行OLAP运算
+（大规模资源占用），使用一个结点在远程做灾备（性能要求不如本地高），读写分离等等主节点举有读写
+权限，而从节点只有读权限；
 
-3.提高线程的可管理性，线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低
-系统的稳定性，使用线程池可以进行统一的分配、调优、分配。</code></pre><h2 id="四大线程池："><a href="#四大线程池：" class="headerlink" title="四大线程池："></a>四大线程池：</h2><h2 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool:"></a><b>newFixedThreadPool:</b></h2><p>第一种比较常用newFixedThreadPool（固定大小的线程池,常用的哦）<br>首先看一下这种线程池的创建方法（底层代码）：</p>
-<pre><code>public static ExecutorService newFixedThreadPool(int nThreads) {
-    return new ThreadPoolExecutor(nThreads, nThreads,
-          0L, TimeUnit.MILLISECONDS,
-          new LinkedBlockingQueue&lt;Runnable&gt;());</code></pre><p>}<br>从这种构造方法可以看出，它创建了一个固定大小的线程池，每一次业务都会创建一个线程，直到到达线程池的最大值nThreads，线程池的大小一旦达到最大值之后，再有新任务提交时，就会将新提交的任务放入无界阻塞队列，等到有线程空闲时，再从队列中取出来继续执行任务。这就是newFixedThreadPool创建线程的大致流程。建议使用此线程池。<br><b>例子如下：</b></p>
-<pre><code>public class OneMoreStudy {
-    public static void main(String[] args) {
-    ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
+（5）.Sharded Cluster(分片集)
+1.即分片集。分片集的主要设计目标是：
+2.水平扩展：当一台服务器满足不了需求的时候，我们可以选择垂直扩展（增加服务器硬件），它虽然简单，
+但很容易达到极限，并且面临成本高等明显缺点。成本更低的方式是使用n台服务器组成集群来满足系统需求。
+这就是分片集的主要设计目标；
+3.缩短响应时间：因为可以把数据分散到多台服务器上，自然每台服务器的处理压力减小，处理时间就会缩短；
+4.这里会出现一个问题：假设每台服务器出故障的机率是x%，那么n台服务器有一台出现故障的机率就是x% * n，
+如果不做高可用设计，集群出现故障的概率就会随机器数量成正比增长，这在工程上是不能接受的。幸运的是我
+们已经有了解决高可用的方案，也就是复制集。所以MongoDB的分片集群要求每一个片都是复制集（当然测试环境
+也可以使用单结点，生产环境不推荐）。</code></pre><h2 id="二-这里我们为了保证mongodb的高可用性，就给大家主要写Replica-Set（副本集）。"><a href="#二-这里我们为了保证mongodb的高可用性，就给大家主要写Replica-Set（副本集）。" class="headerlink" title="二.这里我们为了保证mongodb的高可用性，就给大家主要写Replica Set（副本集）。"></a>二.这里我们为了保证mongodb的高可用性，就给大家主要写Replica Set（副本集）。</h2><p><img src="/img/clipboardd.png"></img></p>
+<pre><code>1.首先我们这里搭建集群需要三个mongdb，Mongodb(M)表示主节点，Mongodb(S)表示备节点，Mongodb(A)表示仲
+裁节点。主备节点存储数据，仲裁节点不存储数据。客户端同时连接主节点与备节点，不连接仲裁节点。
 
-    for (int i = 0; i &lt; 5; i++) {
-        final int index = i;
-        fixedThreadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat(
-                    &quot;HH:mm:ss&quot;);
-                System.out.println(&quot;运行时间: &quot; +
-                sdf.format(new Date()) + &quot; &quot; + index);
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            }
-        });
-    }
+2.默认设置下，主节点提供所有增删查改服务，备节点不提供任何服务。但是可以通过设置使备节点提供查询服
+务，这样就可以减少主节点的压力，当客户端进行数据查询时，请求自动转到备节点上。这个设置叫做Read 
+Preference Modes，同时Java客户端提供了简单的配置方式，可以不必直接对数据库进行操作。 
 
-    fixedThreadPool.shutdown(); 
-    }
-}</code></pre><h2 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool:"></a><b>newCachedThreadPool:</b></h2><p>第二种:newCachedThreadPool（缓冲线程池基于内存,线程个数不限制）<br>首先看一下底层如何创建newCachedThreadPool这个对象：</p>
-<pre><code>public static ExecutorService newCachedThreadPool() {
- return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
-                   60L, TimeUnit.SECONDS,
-                   new SynchronousQueue&lt;Runnable&gt;());
- }</code></pre><p>从构造方法中可以看出，它创建了一个可缓存的线程池。当有新的任务提交时，有空闲线程就直接处理任务，没有空闲线程就创建线程，队列中于newFixedThreadPool这个线程池不同，它的队列不储存线程任务。并且此线程池没有线程限制，就是说只要有内存或者空闲线程都可以一直创建任务线程。线程的最大个数完全依赖于JVM能创建线程最大个数的大小。还有线程如果超过60秒空闲就会回收即删除。一般不建议使用此线程池，如果线程高发期，就会造成jvm内存溢出，线程池报错。<br><b>例子如下：</b></p>
-<pre><code>public class OneMoreStudy {
-    public static void main(String[] args) {
-    ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+3.仲裁节点是一种特殊的节点，它本身并不存储数据，主要的作用是决定哪一个备节点在主节点挂掉之后提升为
+主节点，所以客户端不需要连接此节点。这里虽然只有一个备节点，但是仍然需要一个仲裁节点来提升备节点
+级别。</code></pre><h2 id="三-开始搭建集群。"><a href="#三-开始搭建集群。" class="headerlink" title="三.开始搭建集群。"></a>三.开始搭建集群。</h2><p>1.首先在官网下载mongodb  <a href="https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.13.tgz" target="_blank" rel="noopener">https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.13.tgz</a><br>如果下载速度过慢你可以在虚拟机中下载，只需要在路径前加wget即可。</p>
+<p>2.下载完之后在 /usr/local下创建目录</p>
+<pre><code>#  mkdir mongodb </code></pre><p>3.进入 mongodb 目录，把下载的压缩包解压三次。</p>
+<pre><code>#  cd  mongodb/ 
+#  tar -zxvf   mongodb-linux-x86_64-4.0.13.tgz </code></pre><p>4.解压三个mongdb后改名字更好区分主从节点和仲裁节点</p>
+<pre><code>#  mv   mongodb-linux-x86_64-4.0.13.tgz   /usr/local/mongodb/master
+#  mv   mongodb-linux-x86_64-4.0.13.tgz   /usr/local/mongodb/slaver
+#  mv   mongodb-linux-x86_64-4.0.13.tgz   /usr/local/mongodb/arbiter</code></pre><p>5.然后cd {/master/slaver/arbiter}给这三个节点都创建一个data目录,和配置文件<br>data目录：</p>
+<pre><code>#  cd {/master/slaver/arbiter}
+#  mkdir -p     data/db       ----db是用来存放数据
+# mkdir  -p     data/logs    ----logs存放日志
+--------继续在logs目录创建文件 mongodb.log</code></pre><p>配置文件：</p>
+<pre><code># cd bin/
+# 进入bin目录下创建配置文件mongodb.conf，配置文件内容如下：
+dbpath =/usr/local/mongodb/master/data/db      
+logpath =/usr/local/mongodb/master/data/logs/mongodb.log
+logappend = true
+noprealloc=true
+replSet = test
+port = 27017
+fork = true
+bind_ip=0.0.0.0
+其他两个节点配置只需要修改三个地方dbpath 、logpath、port </code></pre><p>6.做完了上述的配置基本上就可以了，下面我们就来启动三个mongodb</p>
+<pre><code>/usr/local/mongodb/master/bin/mongod -f                        /usr/local
+/mongodb/master/bin/mongodb.conf   --启动</code></pre><p>7.启动之后进入mongodb客户端（需要环境变量支持）</p>
+<pre><code>#  mongo       ----进入客户端
+# config = {
+   &quot;_id&quot;:&quot;test&quot;,
+  &quot;members&quot;:[
+    {&quot;_id&quot;:0,&quot;host&quot;:&quot;192.168.222.133:27017&quot;},
+    {&quot;_id&quot;:1,&quot;host&quot;:&quot;192.168.222.133:27018&quot;},                       
+    {&quot;_id&quot;:2,&quot;host&quot;:&quot;192.168.222.133:27019&quot;, arbiterOnly:true}
+  ]
+}    -----创建副本集  
+--- arbiterOnly:true  仲裁节点。
 
-    for (int i = 0; i &lt; 5; i++) {
-        final int index = i;
-        cachedThreadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat(
-                    &quot;HH:mm:ss&quot;);
-                System.out.println(&quot;运行时间: &quot; +
-                sdf.format(new Date()) + &quot; &quot; + index);
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            }
-        });
-    }
+#没报错就执行 # rs.initiate(config) 使集群config 配置生效
 
-    cachedThreadPool.shutdown();
-    }
-}</code></pre><h2 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor:"></a>newSingleThreadExecutor:</h2><p>第三种线程池newSingleThreadExecutor(线程池内部为单线程)<br>首先，看一下此线程池的创建方法:</p>
-<pre><code>public static ExecutorService newSingleThreadExecutor() {
-    return new FinalizableDelegatedExecutorService
-        (new ThreadPoolExecutor(1, 1,
-                    0L, TimeUnit.MILLISECONDS,
-                    new LinkedBlockingQueue&lt;Runnable&gt;()));
-}</code></pre><p>从构造方法可以看出，他是一个单线程化的线程池，所谓单线程，就是每次执行的线程任务只有一个，只有这一个执行完之后才能执行下一个线程任务。保证了线程池内部所有线程任务井然有序。此线程池是单线程可能有人会疑惑，既然是单线程，那么这种线程池还有必要存在嘛？在此说明一下，这里的单线程指的是线程池内部，从线程池外部的角度看，主线程在提交任务到线程池时并没有堵塞。仍然是异步的。（我理解就是提交任务也就是发起线程这时候是很快的没有堵塞，但可能就是在执行线程任务时会按照顺序。效率较低）！</p>
-<p><b>例子如下：</b></p>
-<pre><code>public class OneMoreStudy {
-    public static void main(String[] args) {
-    ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-
-    for (int i = 0; i &lt; 5; i++) {
-        final int index = i;
-        singleThreadExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat(
-                    &quot;HH:mm:ss&quot;);
-                System.out.println(&quot;运行时间: &quot; +
-                sdf.format(new Date()) + &quot; &quot; + index);
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            }
-        });
-    }
-
-    singleThreadExecutor.shutdown();
-    }
-}</code></pre><h2 id="newScheduledThreadPool"><a href="#newScheduledThreadPool" class="headerlink" title="newScheduledThreadPool:"></a>newScheduledThreadPool:</h2><p>第四种线程池newScheduledThreadPool（固定大小，支持定时，周期性任务执行）<br><b>直接上例子：（首先定时例子：）</b></p>
-<pre><code>public class OneMoreStudy {
-    public static void main(String[] args) {
-    final SimpleDateFormat sdf = new SimpleDateFormat(&quot;HH:mm:ss&quot;);
-    ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(3);
-    System.out.println(&quot;提交时间: &quot; + sdf.format(new Date()));
-    scheduledThreadPool.schedule(new Runnable() {
-        @Override
-        public void run() {
-            System.out.println(&quot;运行时间: &quot; + sdf.format(new Date()));
-        }
-        }, 3, TimeUnit.SECONDS);
-    scheduledThreadPool.shutdown();
-    }
-}</code></pre><p>使用该线程的schedule方法，延迟3秒钟后执行任务。结果如下：<br><img src="/img/0DB40A6FB2484214978C8D8C9A78E359.jpg"></img></p>
-<p>周期性任务执行例子：</p>
-<pre><code>public class OneMoreStudy {
-    public static void main(String[] args) {
-    final SimpleDateFormat sdf = new SimpleDateFormat(&quot;HH:mm:ss&quot;);
-    ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(3);
-    System.out.println(&quot;提交时间: &quot; + sdf.format(new Date()));
-    scheduledThreadPool.scheduleAtFixedRate(new Runnable() {
-        @Override
-        public void run() {
-            System.out.println(&quot;运行时间: &quot; + sdf.format(new Date()));
-        }
-        }, 1, 3, TimeUnit.SECONDS);
-    Thread.sleep(10000);
-    scheduledThreadPool.shutdown();
-    }
-}</code></pre><p>使用该线程的scheduleAtFixedRate方法，含义就是延时一秒后每隔三秒执行任务，一直循环，我测试的时候不会停，就像循环无数次一样.运行结果如下:<br><img src="/img/43757A2C9ADC44FA8E8E31EDCFB72477.jpg"></img></p>
-<p>总结:本文共有四种常用线程池.<br>(1).固定大小的线程池;超出最大值的线程任务放在线程队列,等待有线程空闲之后执行.(常用)<br>(2).线程大小无限制的线程池.上限完全基于JVM内存的最大线程大小<br>(3).单线程化的线程池,保证线程池内的任务执行顺序.线程池外部为异步,提交任务没有堵塞.单线程化值得是内部哦<br>(4).固定大小,并且支持定时,以及周期性任务(和for循环差不多哈不会停的)</p>
+#查看是否生效 # rs.status();</code></pre><p>到这里副本集搭建完毕 。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2629058993@qq.com </span>
@@ -565,12 +510,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>四大线程池</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1.6k</span></p>
+    <p><span class="copy-title">文章标题:</span>Mongodb集群搭建</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.5k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="蛋蛋有点笨">蛋蛋有点笨</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-31, 16:08:46</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-31, 16:59:24</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/31/threadpool/" title="四大线程池">http://yoursite.com/2019/12/31/threadpool/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-03, 19:24:12</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-03, 19:41:17</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/03/mongo/" title="Mongodb集群搭建">http://yoursite.com/2020/01/03/mongo/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -585,7 +530,7 @@
 
 <script>
     var gitment = new Gitment({
-        id: 'http://yoursite.com/2019/12/31/threadpool/', // 可选。默认为 location.href
+        id: 'http://yoursite.com/2020/01/03/mongo/', // 可选。默认为 location.href
         owner: '2629058993',
         repo: '2629058993.github.io',
         oauth: {
