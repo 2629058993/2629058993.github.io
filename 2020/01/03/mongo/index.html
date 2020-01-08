@@ -6,24 +6,24 @@
   <meta name="keywords" content=" mongodb , 非关系型数据库 , mongodb集群 , 一月三日晚多云 ">
   <meta name="description" content="Mongodb集群搭建 | 生活也需平稳对待">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="本来早该4号发布的文章一直拖到了今天8号才发布，作者最近一周在学习上有点分心了，也可以说是萎靡不振哈哈哈😂。其实我也不知道为什么我有时候很浮躁，知道急功近利肯定不行，但还是想一步登天。有句话很适合我，能力满足不了自己的野心。说着说着。。。我的眼角又湿了。 最近几天也没有敲多少代码，全是在看一些文章，举个例子，[如何吊打面试官]、[面试中你必须要知道的几件事]滋滋滋，能看出当时我的浮躁嘛哈哈哈哈，">
+<meta name="description" content="来喽来喽他真的来咯！答应你们的HashMap底层原理！害，看了看时间又快到午夜12点了，想到又要马上离开我学习一天了的教室，虽然相隔时间不长，但是。。。说着说着这眼角又湿辽。 好了啦正式进入我们今天的主题，HashMap!参考文章:https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5de85e05f265da33b50727f6#heading-21 一.背景作为面试官最最最经常问到的java基础之一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo常用命令">
-<meta property="og:url" content="http://yoursite.com/2020/01/04/hexocommand/index.html">
+<meta property="og:title" content="HashMap底层">
+<meta property="og:url" content="http://yoursite.com/2020/01/08/HashMap/index.html">
 <meta property="og:site_name" content="生活也需平稳对待">
-<meta property="og:description" content="本来早该4号发布的文章一直拖到了今天8号才发布，作者最近一周在学习上有点分心了，也可以说是萎靡不振哈哈哈😂。其实我也不知道为什么我有时候很浮躁，知道急功近利肯定不行，但还是想一步登天。有句话很适合我，能力满足不了自己的野心。说着说着。。。我的眼角又湿了。 最近几天也没有敲多少代码，全是在看一些文章，举个例子，[如何吊打面试官]、[面试中你必须要知道的几件事]滋滋滋，能看出当时我的浮躁嘛哈哈哈哈，">
+<meta property="og:description" content="来喽来喽他真的来咯！答应你们的HashMap底层原理！害，看了看时间又快到午夜12点了，想到又要马上离开我学习一天了的教室，虽然相隔时间不长，但是。。。说着说着这眼角又湿辽。 好了啦正式进入我们今天的主题，HashMap!参考文章:https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5de85e05f265da33b50727f6#heading-21 一.背景作为面试官最最最经常问到的java基础之一">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/img/16f75b589d975054.jpg">
-<meta property="og:image" content="http://yoursite.com/img/201810081648082752.jpg">
-<meta property="og:image" content="http://yoursite.com/img/0.jpg">
-<meta property="article:published_time" content="2020-01-04T12:20:55.000Z">
-<meta property="article:modified_time" content="2020-01-08T11:33:37.431Z">
+<meta property="og:image" content="http://yoursite.com/img/16f80e36c4da7a16.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clipboard3.png">
+<meta property="og:image" content="http://yoursite.com/img/clipboard4.png">
+<meta property="article:published_time" content="2020-01-08T15:31:07.000Z">
+<meta property="article:modified_time" content="2020-01-08T15:51:27.220Z">
 <meta property="article:author" content="蛋蛋笨死辽">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="Hexo命令">
-<meta property="article:tag" content="1月4日晚 霾">
+<meta property="article:tag" content="HashMap">
+<meta property="article:tag" content="面试须知">
+<meta property="article:tag" content="1月8日晚 多云">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/img/16f75b589d975054.jpg">
+<meta name="twitter:image" content="http://yoursite.com/img/16f80e36c4da7a16.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -144,6 +144,14 @@
     
         
             
+            <li><div data-rel="面试须知">面试须知<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
             <li><div data-rel="Hexo">Hexo<small>(2)</small></div>
                 
             </li>
@@ -161,14 +169,6 @@
         
             
             <li><div data-rel="java知识">java知识<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="面试须知">面试须知<small>(1)</small></div>
                 
             </li>
             
@@ -231,6 +231,42 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a class="color3">HashMap</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">面试须知</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">1月8日晚 多云</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">Hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Hexo命令</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">1月4日晚 霾</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">mysql-proxy</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">数据库读写分离</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">mysql中间件</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a class="color3">mongodb</a>
     </li>
     
@@ -247,22 +283,6 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color1">github托管代码</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">Hexo</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">3-Hexo主题</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">Github Pages</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color1">Mysql</a>
     </li>
     
@@ -275,15 +295,15 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color2">mysql-proxy</a>
+        <a class="color1">github托管代码</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color3">数据库读写分离</a>
+        <a class="color4">3-Hexo主题</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color4">mysql中间件</a>
+        <a class="color3">Github Pages</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -296,26 +316,6 @@
     
     <li class="article-tag-list-item">
         <a class="color3">12月31日下午多云转晴</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color2">Hexo命令</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">1月4日晚 霾</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">HashMap</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">面试须知</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">1月8日晚 多云</a>
     </li>
     
     <div class="clearfix"></div>
@@ -382,7 +382,7 @@
         
         <a  class="Hexo "
            href="/2019/12/29/my-first-blog/"
-           data-tag="github托管代码,Hexo,3-Hexo主题,Github Pages"
+           data-tag="Hexo,github托管代码,3-Hexo主题,Github Pages"
            data-author="" >
             <span class="post-title" title="搭建个人博客教程-hexo">搭建个人博客教程-hexo</span>
             <span class="post-date" title="2019-12-29 20:15:46">2019/12/29</span>
@@ -623,7 +623,7 @@ bind_ip=0.0.0.0
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ELK','#KafKa消息队列','#12月30日晚多云','#mongodb','#非关系型数据库','#mongodb集群','#一月三日晚多云','#github托管代码','#Hexo','#3-Hexo主题','#Github Pages','#Mysql','#Mysql主从复制','#12月1日多云','#mysql-proxy','#数据库读写分离','#mysql中间件','#thread pool','#线程池','#12月31日下午多云转晴','#Hexo命令','#1月4日晚 霾','#HashMap','#面试须知','#1月8日晚 多云',],
+            'data': ['#ELK','#KafKa消息队列','#12月30日晚多云','#HashMap','#面试须知','#1月8日晚 多云','#Hexo','#Hexo命令','#1月4日晚 霾','#mysql-proxy','#数据库读写分离','#mysql中间件','#mongodb','#非关系型数据库','#mongodb集群','#一月三日晚多云','#Mysql','#Mysql主从复制','#12月1日多云','#github托管代码','#3-Hexo主题','#Github Pages','#thread pool','#线程池','#12月31日下午多云转晴',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
