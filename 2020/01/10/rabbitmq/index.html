@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>生活也需平稳对待</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="生活也需平稳对待">
+  <title>linux-rabbitMQ搭建 | 生活也需平稳对待</title>
+  <meta name="keywords" content=" linux , rabbitmq , 1月10日晚 阴 ">
+  <meta name="description" content="linux-rabbitMQ搭建 | 生活也需平稳对待">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="来喽来喽他真的来咯！答应你们的HashMap底层原理！害，看了看时间又快到午夜12点了，想到又要马上离开我学习一天了的教室，虽然相隔时间不长，但是。。。说着说着这眼角又湿辽。 好了啦正式进入我们今天的主题，HashMap!参考文章:https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5de85e05f265da33b50727f6#heading-21 一.背景作为面试官最最最经常问到的java基础之一">
 <meta property="og:type" content="article">
@@ -57,7 +57,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -442,12 +442,61 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-rabbitmq" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">蛋蛋:&quot;今天也是迷路的一天.&quot;</span></a></li></ol>
+        <h1 class="article-title">linux-rabbitMQ搭建</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="搭建教程">搭建教程</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color1">linux</a>
+            
+            <a class="color4">rabbitmq</a>
+            
+            <a class="color4">1月10日晚 阴</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-01-10 19:39:51'>2020-01-10 18:52</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:1k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#你们好鸭！我又来了！今天下午搞了一个消息中间件，在进行于springboot结合的时候一直报错。说什么连接关闭。说到这里大家应该能猜出来是那个中间件了（虽然中间件本就没多少），没错那就是市场上比较流行的rabbitMQ。对于rabbitMQ我了解的并不多，虽然听老师说了很多次，但是我没有去深入研究，不过我还是要在这里给大家介绍一下这个消息中间件的作用。对以后学习rabbitMQ这个中间件会更加容易理解一点。废话不多说！开始！"><span class="toc-text">你们好鸭！我又来了！今天下午搞了一个消息中间件，在进行于springboot结合的时候一直报错。说什么连接关闭。说到这里大家应该能猜出来是那个中间件了（虽然中间件本就没多少），没错那就是市场上比较流行的rabbitMQ。对于rabbitMQ我了解的并不多，虽然听老师说了很多次，但是我没有去深入研究，不过我还是要在这里给大家介绍一下这个消息中间件的作用。对以后学习rabbitMQ这个中间件会更加容易理解一点。废话不多说！开始！</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#看法："><span class="toc-text">看法：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#emmmm…刚才也说了，了解的并不多，不过确实有点少哈哈哈。没关系咱们的主题是搭建哈哈哈（奸诈）。那还等啥呢？来看看吧！"><span class="toc-text">emmmm…刚才也说了，了解的并不多，不过确实有点少哈哈哈。没关系咱们的主题是搭建哈哈哈（奸诈）。那还等啥呢？来看看吧！</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一-搭建过程来自CSDN文章：https-blog-csdn-net-u010638673-article-details-81983300"><span class="toc-text">一.搭建过程来自CSDN文章：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u010638673&#x2F;article&#x2F;details&#x2F;81983300</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二-Linux下RabbitMQ服务器搭建"><span class="toc-text">二.Linux下RabbitMQ服务器搭建</span></a>
     
 <style>
     .left-col .switch-btn,
@@ -460,10 +509,68 @@
     }
 </style>
 </div>
-            <h1>蛋蛋:"今天也是迷路的一天."</h1>
-        </article>
-        
-        
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="你们好鸭！我又来了！今天下午搞了一个消息中间件，在进行于springboot结合的时候一直报错。说什么连接关闭。说到这里大家应该能猜出来是那个中间件了（虽然中间件本就没多少），没错那就是市场上比较流行的rabbitMQ。对于rabbitMQ我了解的并不多，虽然听老师说了很多次，但是我没有去深入研究，不过我还是要在这里给大家介绍一下这个消息中间件的作用。对以后学习rabbitMQ这个中间件会更加容易理解一点。废话不多说！开始！"><a href="#你们好鸭！我又来了！今天下午搞了一个消息中间件，在进行于springboot结合的时候一直报错。说什么连接关闭。说到这里大家应该能猜出来是那个中间件了（虽然中间件本就没多少），没错那就是市场上比较流行的rabbitMQ。对于rabbitMQ我了解的并不多，虽然听老师说了很多次，但是我没有去深入研究，不过我还是要在这里给大家介绍一下这个消息中间件的作用。对以后学习rabbitMQ这个中间件会更加容易理解一点。废话不多说！开始！" class="headerlink" title="你们好鸭！我又来了！今天下午搞了一个消息中间件，在进行于springboot结合的时候一直报错。说什么连接关闭。说到这里大家应该能猜出来是那个中间件了（虽然中间件本就没多少），没错那就是市场上比较流行的rabbitMQ。对于rabbitMQ我了解的并不多，虽然听老师说了很多次，但是我没有去深入研究，不过我还是要在这里给大家介绍一下这个消息中间件的作用。对以后学习rabbitMQ这个中间件会更加容易理解一点。废话不多说！开始！"></a>你们好鸭！我又来了！今天下午搞了一个消息中间件，在进行于springboot结合的时候一直报错。说什么连接关闭。说到这里大家应该能猜出来是那个中间件了（虽然中间件本就没多少），没错那就是市场上比较流行的rabbitMQ。对于rabbitMQ我了解的并不多，虽然听老师说了很多次，但是我没有去深入研究，不过我还是要在这里给大家介绍一下这个消息中间件的作用。对以后学习rabbitMQ这个中间件会更加容易理解一点。废话不多说！开始！</h5><h2 id="看法："><a href="#看法：" class="headerlink" title="看法："></a>看法：</h2><p>  因为之前我们消费者调用提供者有很高的耦合度，如果说中间出现异常或宕机就很难继续往下处理，但是出现了消息中间件以后就可以完美并轻易的解决这个问题。无论消费者还是提供者都只需要连接上消息队列后即可消费消息或者发送消息。无需知道对方的存在。这也是中间件的一大优点：解耦！   </p>
+<h5 id="emmmm…刚才也说了，了解的并不多，不过确实有点少哈哈哈。没关系咱们的主题是搭建哈哈哈（奸诈）。那还等啥呢？来看看吧！"><a href="#emmmm…刚才也说了，了解的并不多，不过确实有点少哈哈哈。没关系咱们的主题是搭建哈哈哈（奸诈）。那还等啥呢？来看看吧！" class="headerlink" title="emmmm…刚才也说了，了解的并不多，不过确实有点少哈哈哈。没关系咱们的主题是搭建哈哈哈（奸诈）。那还等啥呢？来看看吧！"></a>emmmm…刚才也说了，了解的并不多，不过确实有点少哈哈哈。没关系咱们的主题是搭建哈哈哈（奸诈）。那还等啥呢？来看看吧！</h5><p><img src="/img/201810081648082752.jpg"></img></p>
+<h4 id="一-搭建过程来自CSDN文章：https-blog-csdn-net-u010638673-article-details-81983300"><a href="#一-搭建过程来自CSDN文章：https-blog-csdn-net-u010638673-article-details-81983300" class="headerlink" title="一.搭建过程来自CSDN文章：https://blog.csdn.net/u010638673/article/details/81983300"></a>一.搭建过程来自CSDN文章：<a href="https://blog.csdn.net/u010638673/article/details/81983300" target="_blank" rel="noopener">https://blog.csdn.net/u010638673/article/details/81983300</a></h4><h4 id="二-Linux下RabbitMQ服务器搭建"><a href="#二-Linux下RabbitMQ服务器搭建" class="headerlink" title="二.Linux下RabbitMQ服务器搭建"></a>二.Linux下RabbitMQ服务器搭建</h4><p>1.因为RabbitMQ使用Erlang语言开发的所以需要安装Erlang；</p>
+<pre><code>安装erlang地址
+otp_src_18.2.1.tar.gz 下载地址：
+$ wget http://erlang.org/download/otp_src_18.2.1.tar.gz</code></pre><p>2.安装RabbitMQ地址</p>
+<pre><code>rabbitmq-server-3.6.9.tar.xz 下载地址：
+$ wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.9/rabbitmq-server-generic-unix-3.6.9.tar.xz </code></pre><p>三.首先安装erlang<br>1.安装GCC GCC-C++ Openssl等模块</p>
+<pre><code>$ yum -y install make gcc gcc-c++ kernel-devel m4 ncurses-devel openssl-devel</code></pre><p>2.安装ncurses</p>
+<pre><code>$  yum -y install ncurses-devel</code></pre><p>3.对Erlang源代码文件压缩</p>
+<pre><code>$ tar -xvf otp_src_18.2.1.tar.gz </code></pre><p>4.然后，运行如下命令重命名文件夹为erlang。</p>
+<pre><code>$ mv otp_src_18.2.1/  erlang</code></pre><p>5.检查编译环境并配置安装路径，运行如下命令：</p>
+<pre><code>$ cd erlang/
+$ ./configure --prefix=/usr/local/erlang --without-javac</code></pre><p>6.检查编译环境完之后进行编译安装</p>
+<pre><code>$ make &amp;&amp; make install</code></pre><p>7.设置环境变量添加Erlang环境</p>
+<pre><code>$  vi  etc/profile
+ERLANG_HOME=/usr/local/erlang
+然后加入PATH中
+PATH=$JAVA_HOME/bin:$ERLANG_HOME/bin:$PATH
+这和windows上配置环境变量很相似，都是配完单个后，最后再加入PATH中进行生效。</code></pre><p>8.配置完后保存，并运行命令使环境变量立即生效</p>
+<pre><code>$  source ~/.bash_profile     或者 #  source /etc/profile</code></pre><p>9.最后验证erlang是否安装成功。</p>
+<pre><code>$ erl -version</code></pre><p><img src="/img/clipboard0.png"></img><br>        出现这个效果后说明Erlang安装成功，总结整体的步骤其实就四步：<br>        （1）.安装GCC GCC-C++ Openssl等模块<br>        （2）.检查编译环境并配置安装路径<br>        （3）.对源代码进行编译&amp;&amp;安装<br>        （4）.设置环境变量添加Erlang环境</p>
+<p>四.安装RabbitMQ<br>1.因为RabbitMQ文件是xz文件所以第一步先下载xz压缩工具：</p>
+<pre><code>$  yum install xz</code></pre><p>2.解压Rabbit压缩包：</p>
+<pre><code>$ xz -d rabbitmq-server-generic-unix-3.6.9.tar.xz
+$ tar -xvf rabbitmq-server-generic-unix-3.6.9.tar </code></pre><p>3.随后移到/usr/local/目录下改名为RabbitMq</p>
+<pre><code>$ mv  rabbitmq_server-3.6.9 /usr/local/rabbitmq</code></pre><p>4.修改/etc/profile</p>
+<pre><code>$ MQ_HOME=/usr/local/rabbitmq/sbin
+执行source /etc/profile使得PATH路径更新，rabbitMQ安装成功。</code></pre><p>5.随后启动RabbitMQ管理方式</p>
+<pre><code>$ cd /usr/local/rabbitmq/sbin
+$ ./rabbitmq-plugins enable rabbitmq_management   #启动后台管理
+$ ./rabbitmq-server -detached    #后台运行rabbitmq</code></pre><p>6.设置端口可供外部访问</p>
+<pre><code>$  iptables -I INPUT -p tcp --dport 15672 -j ACCEPT</code></pre><p>7.因为rabbitMQ需要登录才能管理查看所以先创建用户</p>
+<pre><code>$  ./rabbitmqctl add_user  admin 123456        ##  admin为账号， 123456为密码。</code></pre><p>8.授管理员权限</p>
+<pre><code>$  ./rabbitmqctl set_user_tags admin administrator</code></pre><p>9.授权用户到虚拟机</p>
+<pre><code>$  ./rabbitmqctl set_permissions -p &quot;/&quot; admin &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;      也可以说是添加权限</code></pre><p>10.然后就可以远程访问了，然后可直接配置用户权限等信息。<br>http://虚拟机ip:15672/</p>
+<p>到这里rabbitMQ搭建完成。           完结!告辞（靓仔挥手）！</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2629058993@qq.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>linux-rabbitMQ搭建</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="蛋蛋笨死辽">蛋蛋笨死辽</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-01-10, 18:52:31</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-10, 19:39:51</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/10/rabbitmq/" title="linux-rabbitMQ搭建">http://yoursite.com/2020/01/10/rabbitmq/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
     <div id="comments"></div>
 <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
 
@@ -471,7 +578,7 @@
 
 <script>
     var gitment = new Gitment({
-        id: 'http://yoursite.com/', // 可选。默认为 location.href
+        id: 'http://yoursite.com/2020/01/10/rabbitmq/', // 可选。默认为 location.href
         owner: '2629058993',
         repo: '2629058993.github.io',
         oauth: {
@@ -481,6 +588,13 @@
     })
     gitment.render('comments')
 </script>
+
+
+
+
+    
+
+
 
 
     </div>
