@@ -6,23 +6,21 @@
   <meta name="keywords" content=" kafka , kafka集群 ">
   <meta name="description" content="kafka集群搭建(单机伪集群) | 生活也需平稳对待">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="一.linux（Centos7）安装elasticsearch6.2.21、安装jdk，至少需要jdk1.8版本2、下载elasticsearch 安装包 $ cd &#x2F;usr&#x2F;local&#x2F;src###如果没有安装wget 请安装（yum -y install wget） $ wget https:&#x2F;&#x2F;artifacts.elastic.co&#x2F;downloads&#x2F;elasticsearch&#x2F;elas">
+<meta name="description" content="今天是1月13日，也是值得的一天！只要每天自己的思维得到提升，哪怕只有一点那就是提升，人没有思想跟行尸走肉没有区别。更何况你们也都知道我帅洋是个好强之人。我要让我的青春充满价值，今天看了一些书籍简介，感觉还可以，同时我也很感兴趣，我准备买几本来充实自己的假期充实自己，到时候我会更新一个书籍标签，大家如果有兴趣可以看看哦！我打算买一些关于与人沟通还有程序技术这些类型的书籍，后续要是有其他类型还会持续">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Elasticearch集群搭建">
-<meta property="og:url" content="http://yoursite.com/2020/01/12/Elasticearch/index.html">
+<meta property="og:title" content="mysql储存过程">
+<meta property="og:url" content="http://yoursite.com/2020/01/13/mysqlpro/index.html">
 <meta property="og:site_name" content="生活也需平稳对待">
-<meta property="og:description" content="一.linux（Centos7）安装elasticsearch6.2.21、安装jdk，至少需要jdk1.8版本2、下载elasticsearch 安装包 $ cd &#x2F;usr&#x2F;local&#x2F;src###如果没有安装wget 请安装（yum -y install wget） $ wget https:&#x2F;&#x2F;artifacts.elastic.co&#x2F;downloads&#x2F;elasticsearch&#x2F;elas">
+<meta property="og:description" content="今天是1月13日，也是值得的一天！只要每天自己的思维得到提升，哪怕只有一点那就是提升，人没有思想跟行尸走肉没有区别。更何况你们也都知道我帅洋是个好强之人。我要让我的青春充满价值，今天看了一些书籍简介，感觉还可以，同时我也很感兴趣，我准备买几本来充实自己的假期充实自己，到时候我会更新一个书籍标签，大家如果有兴趣可以看看哦！我打算买一些关于与人沟通还有程序技术这些类型的书籍，后续要是有其他类型还会持续">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/img/wps1.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/wps2.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/wps3.jpeg">
-<meta property="article:published_time" content="2020-01-12T12:57:55.000Z">
-<meta property="article:modified_time" content="2020-01-13T04:27:40.385Z">
+<meta property="og:image" content="http://yoursite.com/img/a50f4bfbfbedab6481621f04fc36afc378311ee5.jpg">
+<meta property="article:published_time" content="2020-01-13T14:18:01.000Z">
+<meta property="article:modified_time" content="2020-01-13T14:57:26.351Z">
 <meta property="article:author" content="蛋蛋笨死辽">
-<meta property="article:tag" content="Elasticearch集群">
-<meta property="article:tag" content="Elasticearch">
+<meta property="article:tag" content="mysql储存过程">
+<meta property="article:tag" content="1月13日 阴转多云">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/img/wps1.jpeg">
+<meta name="twitter:image" content="http://yoursite.com/img/a50f4bfbfbedab6481621f04fc36afc378311ee5.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -151,7 +149,7 @@
     
         
             
-            <li><div data-rel="linux">linux<small>(1)</small></div>
+            <li><div data-rel="Hexo">Hexo<small>(2)</small></div>
                 
             </li>
             
@@ -159,7 +157,7 @@
     
         
             
-            <li><div data-rel="Hexo">Hexo<small>(2)</small></div>
+            <li><div data-rel="linux">linux<small>(1)</small></div>
                 
             </li>
             
@@ -210,6 +208,12 @@
             
             <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
             
+            <li><a target="_blank" href="https://agoodman.club/">肖丹阳</a></li>
+            
+            <li><a target="_blank" href="https://tableconvert.com/">表格工具</a></li>
+            
+            <li><a target="_blank" href="https://juejin.im/user/5cf7c1d7f265da1bc07e28b7/posts">MacroZheng作者</a></li>
+            
         </ul>
     </div>
 </div>
@@ -234,11 +238,15 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color1">kafka</a>
+        <a class="color4">ELK</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color3">kafka集群</a>
+        <a class="color5">KafKa消息队列</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">12月30日晚多云</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -254,15 +262,15 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color4">ELK</a>
+        <a class="color5">Hexo</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color5">KafKa消息队列</a>
+        <a class="color2">Hexo命令</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color5">12月30日晚多云</a>
+        <a class="color3">1月4日晚 霾</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -278,15 +286,27 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color5">Hexo</a>
+        <a class="color1">kafka</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color2">Hexo命令</a>
+        <a class="color3">kafka集群</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color3">1月4日晚 霾</a>
+        <a class="color3">mongodb</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">非关系型数据库</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">mongodb集群</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">一月三日晚多云</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -314,19 +334,11 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color3">mongodb</a>
+        <a class="color5">mysql储存过程</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color3">非关系型数据库</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">mongodb集群</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">一月三日晚多云</a>
+        <a class="color1">1月13日 阴转多云</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -359,14 +371,6 @@
     
     <li class="article-tag-list-item">
         <a class="color3">12月31日下午多云转晴</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">mysql储存过程</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color1">1月13日 阴转多云</a>
     </li>
     
     <div class="clearfix"></div>
@@ -700,7 +704,7 @@ lose my password, I lost my dream .</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#Elasticearch集群','#Elasticearch','#kafka','#kafka集群','#HashMap','#面试须知','#1月8日晚 多云','#ELK','#KafKa消息队列','#12月30日晚多云','#linux','#linux命令','#1月9日傍晚 阴','#Hexo','#Hexo命令','#1月4日晚 霾','#github托管代码','#3-Hexo主题','#Github Pages','#mysql-proxy','#数据库读写分离','#mysql中间件','#mongodb','#非关系型数据库','#mongodb集群','#一月三日晚多云','#Mysql','#Mysql主从复制','#12月1日多云','#rabbitmq','#1月10日晚 阴','#thread pool','#线程池','#12月31日下午多云转晴','#mysql储存过程','#1月13日 阴转多云',],
+            'data': ['#Elasticearch集群','#Elasticearch','#ELK','#KafKa消息队列','#12月30日晚多云','#HashMap','#面试须知','#1月8日晚 多云','#Hexo','#Hexo命令','#1月4日晚 霾','#linux','#linux命令','#1月9日傍晚 阴','#kafka','#kafka集群','#mongodb','#非关系型数据库','#mongodb集群','#一月三日晚多云','#github托管代码','#3-Hexo主题','#Github Pages','#mysql-proxy','#数据库读写分离','#mysql中间件','#mysql储存过程','#1月13日 阴转多云','#Mysql','#Mysql主从复制','#12月1日多云','#rabbitmq','#1月10日晚 阴','#thread pool','#线程池','#12月31日下午多云转晴',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
